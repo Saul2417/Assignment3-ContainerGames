@@ -12,44 +12,47 @@ TowerOfHanoi::TowerOfHanoi()
 	holdNum = 0;
 	roundTimeToSolve = -1;
 	fastestRoundTime = -1;
+	slowestRoundTime = -1;
 	pegToPop = ' ';
 }
 
 //Precondition:
-//Postcondition:
+//Postcondition: return the value of the numDisks object
 int TowerOfHanoi::getNumDisks() const
 {
 	return numDisks;
 }
 
 //Precondition:
-//Postcondition:
+//Postcondition: return the value of the moveCount object
 int TowerOfHanoi::getMoveCount() const
 {
 	return moveCount;
 }
 
 //Precondition:
-//Postcondition:
+//Postcondition: return the value of the holdNum object
 int TowerOfHanoi::getHoldNum() const
 {
 	return holdNum;
 }
 
 //Precondition:
-//Postcondition:
+//Postcondition: return the value of the roundTimeToSolve object
 int TowerOfHanoi::getRoundTimeToSolve() const
 {
 	return roundTimeToSolve;
 }
 
 //Precondition:
-//Postcondition:
+//Postcondition: return the value of the fastestRoundTime object
 int TowerOfHanoi::getFastestRoundTime() const
 {
 	return fastestRoundTime;
 }
 
+//Precondition:
+//Postcondition: return one of the stack objects
 stack<int> TowerOfHanoi::getStack(char stackLetter) const
 {
 	switch (stackLetter)
@@ -96,6 +99,10 @@ void TowerOfHanoi::setRoundTimeToSolve(int newSolveTime)
 	if (fastestRoundTime == -1 || roundTimeToSolve < fastestRoundTime)
 	{
 		fastestRoundTime = roundTimeToSolve;
+	}
+	if (slowestRoundTime == -1 || roundTimeToSolve > slowestRoundTime)
+	{
+		slowestRoundTime = roundTimeToSolve;
 	}
 }
 
@@ -255,7 +262,7 @@ void TowerOfHanoi::hanoiTowerPush(char towerOption)
 		}
 		else
 		{
-			std::cout << "Cannot make the move. Top disk(" << holdNum << ") of Peg-" << pegToPop << " is larger than top disk(" << stackA.top() << ") of Peg-B" << endl;
+			std::cout << "Cannot make the move. Top disk(" << holdNum << ") of Peg-" << pegToPop << " is larger than top disk(" << stackB.top() << ") of Peg-B" << endl;
 			return;
 		}
 		break;
@@ -266,7 +273,7 @@ void TowerOfHanoi::hanoiTowerPush(char towerOption)
 		}
 		else
 		{
-			std::cout << "Cannot make the move. Top disk(" << holdNum << ") of Peg-" << pegToPop << " is larger than top disk(" << stackA.top() << ") of Peg-C" << endl;
+			std::cout << "Cannot make the move. Top disk(" << holdNum << ") of Peg-" << pegToPop << " is larger than top disk(" << stackC.top() << ") of Peg-C" << endl;
 			return;
 		}
 		break;
@@ -285,25 +292,29 @@ void TowerOfHanoi::hanoiTowerPush(char towerOption)
 		stackC.pop();
 	}
 	
-	std::cout << "Top Peg From Peg " << pegToPop << " Has Moved to Peg- " << towerOption << endl;
+	std::cout << "Top Peg From Peg-" << pegToPop << " Has Moved to Peg-" << towerOption << endl;
 	moveCount++;
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: None
+//Postcondition: Returns true or false depending on if each disk has been properly moved to the third stack
 bool TowerOfHanoi::hasWon() const
 {
+	
 	if (stackC.size() != numDisks)
 	{
 		return false;
 	}
 
+	stack<int> verifyStackC(stackC);
+
 	for (int index = 0; index < numDisks; index++)
 	{
-		if (stackC.top() != (index + 1))
+		if (verifyStackC.top() != (index + 1)) 
 		{
 			return false;
 		}
+		verifyStackC.pop();
 	}
 	return true;
 }
@@ -312,6 +323,7 @@ void displayHanoiRules();
 void towerOfHanoiRound(TowerOfHanoi hanoiGame);
 char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiGame);
 char towerOfHanoiRoundPushOption();
+void displayFinalStatistics(TowerOfHanoi hanoiGame);
 void displayHanoiRules();
 
 //Precondition: None
@@ -328,13 +340,14 @@ void playTowerOfHanoi()
 		
 		if (toupper(inputChar("Play again? (Y-yes or N-no) ", "YN")) == 'N')
 		{
+			displayFinalStatistics(hanoiGame);
 			return;
 		}
 	} while (true);	
 }
 
 //Precondition:
-//Postcondition:
+//Postcondition: None
 void towerOfHanoiRound(TowerOfHanoi hanoiGame)
 {
 	chrono::steady_clock::time_point start = chrono::high_resolution_clock::now();
@@ -362,7 +375,9 @@ void towerOfHanoiRound(TowerOfHanoi hanoiGame)
 		if (hanoiGame.hasWon())
 		{
 			chrono::steady_clock::time_point end = chrono::high_resolution_clock::now();
-			hanoiGame.setRoundTimeToSolve(chrono::duration_cast<chrono::seconds>(end - start).count());
+			hanoiGame.setRoundTimeToSolve(chrono::duration_cast<chrono::seconds>((end - start)).count());
+			cout << "Congrats! You Solved The Game In " << hanoiGame.getMoveCount() << " Turn(s)." << endl
+			     << "Time Taken: " << hanoiGame.getRoundTimeToSolve() << " Seconds. " << endl << endl;
 			return;
 		};
 		system("pause");
@@ -377,19 +392,30 @@ char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiGame)
 	do
 	{
 		option = (toupper(inputChar("Select the top disk from the start peg (A, B, C, or Q-quit): ", "ABCQ")));
+		if (option == 'Q')
+		{
+			break;
+		}
 		if (hanoiGame.getStack(option).empty())
 		{
-			cout << "Error: Peg-" << option << "is empty, cannot pop. Please enter a peg that is not empty." << endl;
+			cout << "Error: Peg-" << option << " is empty, cannot pop. Please enter a peg that is not empty." << endl;
 		}
 	}while (hanoiGame.getStack(option).empty());
 
 	return option;
 }
 
+//Precondition: None
+//Postcondition: None
 char towerOfHanoiRoundPushOption()
 {
 	char option = (toupper(inputChar("Select the end peg (A, B, C or Q-quit) to move the selected disk: ", "ABCQ")));
 	return option;
+}
+
+void displayFinalStatistics(TowerOfHanoi hanoiGame)
+{
+	
 }
 
 //Precondition: None
@@ -398,14 +424,14 @@ void displayHanoiRules()
 {
 	std::cout << "The Tower of Hanoi also called the Tower of Brahma or Lucas' Tower is a mathematical game. " << endl
 		<< "It consists of three pegs and a number of rings of different sizes, which can slide onto " << endl
-		<< "any peg. The game starts with the rings in a neat stack in ascending order of size on one" << endl
+		<< "any peg. The game starts with the rings in a neat stack in ascending order of size on one " << endl
 		<< "peg, the smallest at the top, thus making a conical shape." << endl;
 
-	std::cout << "The objective of the game is to move the entire stack from the starting peg - A to ending peg - B," << endl
-		<< "obeying the following simple rules :" << endl << endl;
+	std::cout << "The objective of the game is to move the entire stack from the starting peg - A to ending peg - B, " << endl
+		<< "obeying the following simple rules : " << endl << endl;
 
-	std::cout << "1. Only one disk can be moved at a time." << endl
+	std::cout << "1. Only one disk can be moved at a time. " << endl
 		<< "2. Each move consists of taking the upper disk from one of the stacks and "
-		<< "placing it on top of another stack or on an empty peg." << endl
-		<< "3. No larger disk may be placed on top of a smaller disk." << endl;
+		<< "placing it on top of another stack or on an empty peg. " << endl
+		<< "3. No larger disk may be placed on top of a smaller disk. " << endl;
 }

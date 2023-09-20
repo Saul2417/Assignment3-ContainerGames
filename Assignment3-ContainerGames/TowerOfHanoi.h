@@ -11,6 +11,7 @@ private:
 	int holdNum;
 	int roundTimeToSolve;
 	int fastestRoundTime;
+	int slowestRoundTime;
 	char pegToPop;
 	stack <int> stackA;
 	stack <int> stackB;
@@ -35,4 +36,6 @@ public:
 	void hanoiTowerPush(char towerOption);
 	bool hasWon() const;
 };
+
+//class GameTimer :: TowerOfHanoi
 
