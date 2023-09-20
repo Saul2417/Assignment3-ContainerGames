@@ -23,7 +23,7 @@ string inputString(string prompt, bool spaces)
 }
 
 //PreCondition: valid string of options
-//PostCondition: returns an uppercase  of the option (char)
+//PostCondition: returns an uppercase of the option (char)
 char inputChar(string prompt, string options)
 {
 	char input;
@@ -86,31 +86,31 @@ char inputChar(string prompt, char yes, char no)
 
 //PreCondition: alphaOrDigit (boolean true or false)
 //PostCondition: returns an alphabet or a digit character
-char inputChar(string prompt, bool alphaOrDigit)
-{
-	char input;
-	do
-	{
-		cout << prompt;
-		if (!(cin >> input))
-		{
-			cout << "ERROR: Invalid input. Must be a character type.\n";
-			cin.clear();
-			cin.ignore(999, '\n');
-		}
-		else if (alphaOrDigit && !isalpha(input))
-			cout << "ERROR: Invalid input. Must be an alphabet character.\n";
-		else if (!alphaOrDigit && !isdigit(input))
-			cout << "ERROR: Invalid input. Must be a digit character.\n";
-		else
-		{
-			cin.clear();
-			cin.ignore(999, '\n');
-			break;
-		}
-	} while (true);
-	return input;
-}
+//char inputChar(string prompt, bool alphaOrDigit)
+//{
+//	char input;
+//	do
+//	{
+//		cout << prompt;
+//		if (!(cin >> input))
+//		{
+//			cout << "ERROR: Invalid input. Must be a character type.\n";
+//			cin.clear();
+//			cin.ignore(999, '\n');
+//		}
+//		else if (alphaOrDigit && !isalpha(input))
+//			cout << "ERROR: Invalid input. Must be an alphabet character.\n";
+//		else if (!alphaOrDigit && !isdigit(input))
+//			cout << "ERROR: Invalid input. Must be a digit character.\n";
+//		else
+//		{
+//			cin.clear();
+//			cin.ignore(999, '\n');
+//			break;
+//		}
+//	} while (true);
+//	return input;
+//}
 
 //PreCondition: NA
 //PostCondition: returns any character

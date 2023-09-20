@@ -50,6 +50,16 @@ int TowerOfHanoi::getFastestRoundTime() const
 	return fastestRoundTime;
 }
 
+stack<int> TowerOfHanoi::getStack(char stackLetter) const
+{
+	switch (stackLetter)
+	{
+	case 'A': return stackA; break;
+	case 'B': return stackB; break;
+	case 'C': return stackC; break;
+	}
+}
+
 //Precondition:
 //Postcondition:
 char TowerOfHanoi::getPegToPop() const
@@ -124,7 +134,7 @@ void TowerOfHanoi::displayTowers() const
 	stack<int> displayStackB(stackB);
 	stack<int> displayStackC(stackC);
 
-	std::cout << "Tower of Hanoi: " << right << "Minumum Moves To Solve: " << (pow(2, numDisks) - 1) << left << endl << endl;
+	std::cout << "Tower of Hanoi: " << setw(40) << right << "Minumum Moves To Solve: " << (pow(2, numDisks) - 1) << left << endl << endl;
 
 	for (int index = 0; index < numDisks; index++)
 	{
@@ -176,9 +186,39 @@ void TowerOfHanoi::hanoiTowerPop(char towerOption)
 {
 	switch (towerOption)
 	{
-	case 'A': holdNum = stackA.top(); pegToPop = 'A';  break;
-	case 'B': holdNum = stackB.top(); pegToPop = 'B';  break;
-	case 'C': holdNum = stackC.top(); pegToPop = 'C';  break;
+	case 'A': 
+		if (!stackA.empty())
+		{
+			holdNum = stackA.top();
+			pegToPop = 'A';
+			break;
+		}
+		else
+		{
+			std::cout << "Peg is empty, cannot pop. Please try again.";
+		}
+	case 'B': 
+		if (!stackB.empty())
+		{
+			holdNum = stackB.top();
+			pegToPop = 'B';
+			break;
+		}
+		else
+		{
+			std::cout << "Peg is empty, cannot pop. Please try again.";
+		}
+	case 'C': 
+		if (!stackC.empty())
+		{
+			holdNum = stackC.top(); 
+			pegToPop = 'C';  
+			break;
+		}
+		else
+		{
+			std::cout << "Peg is empty, cannot pop. Please try again.";
+		}
 	default: std::cout << "\t\tERROR - Invalid option."; return;
 	}
 }
@@ -270,7 +310,8 @@ bool TowerOfHanoi::hasWon() const
 
 void displayHanoiRules();
 void towerOfHanoiRound(TowerOfHanoi hanoiGame);
-char towerOfHanoiRoundMenuOption(string optionText);
+char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiGame);
+char towerOfHanoiRoundPushOption();
 void displayHanoiRules();
 
 //Precondition: None
@@ -300,16 +341,16 @@ void towerOfHanoiRound(TowerOfHanoi hanoiGame)
 	do
 	{
 		hanoiGame.displayTowers();
-		switch (towerOfHanoiRoundMenuOption("Select the top disk from the start peg (A, B, C, or Q-quit): "))
+		switch (towerOfHanoiRoundPopOption(hanoiGame))
 		{
 		case 'Q': return; break;
-		case 'A': hanoiGame.hanoiTowerPop('A'); break;
+		case 'A': hanoiGame.hanoiTowerPop('A'); break;		
 		case 'B': hanoiGame.hanoiTowerPop('B'); break;
 		case 'C': hanoiGame.hanoiTowerPop('C'); break;
 		default: std::cout << "\t\tERROR - Invalid option. Please re-enter."; break;
 		}
 
-		switch (towerOfHanoiRoundMenuOption("Select the end peg (A, B, C or Q-quit) to move the selected disk: "))
+		switch (towerOfHanoiRoundPushOption())
 		{
 		case 'Q': return; break;
 		case 'A': hanoiGame.hanoiTowerPush('A'); break;
@@ -329,10 +370,25 @@ void towerOfHanoiRound(TowerOfHanoi hanoiGame)
 }
 
 //Precondition:
-//Postcondition: Return a char character to represent user choice
-char towerOfHanoiRoundMenuOption(string optionText)
-{	
-	char option = toupper(inputChar(optionText, "ABC"));
+//Postcondition: Return a char character to represent user choice that has has been verified to match a stack that is not empty
+char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiGame)
+{
+	char option;
+	do
+	{
+		option = (toupper(inputChar("Select the top disk from the start peg (A, B, C, or Q-quit): ", "ABCQ")));
+		if (hanoiGame.getStack(option).empty())
+		{
+			cout << "Error: Peg-" << option << "is empty, cannot pop. Please enter a peg that is not empty." << endl;
+		}
+	}while (hanoiGame.getStack(option).empty());
+
+	return option;
+}
+
+char towerOfHanoiRoundPushOption()
+{
+	char option = (toupper(inputChar("Select the end peg (A, B, C or Q-quit) to move the selected disk: ", "ABCQ")));
 	return option;
 }
 

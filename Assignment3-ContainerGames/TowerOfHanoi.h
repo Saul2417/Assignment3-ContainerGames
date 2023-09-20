@@ -21,6 +21,7 @@ public:
 	int getNumDisks() const; 
 	int getMoveCount() const;
 	int getHoldNum() const;
+	stack<int> getStack(char stackLetter) const;
 	int getRoundTimeToSolve() const;
 	int getFastestRoundTime() const;
 	char getPegToPop() const;
