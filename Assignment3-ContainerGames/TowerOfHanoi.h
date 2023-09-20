@@ -1,9 +1,6 @@
 #pragma once
-
 #include <stack>
 #include <chrono>
-
-
 using namespace std;
 
 class TowerOfHanoi
