@@ -19,7 +19,6 @@
 #include "TicTacToe.h"
 #include "N_Queens.h"
 
-
 using namespace std;
 int menuOption();
 void playTowerOfHanoi();
@@ -46,6 +45,8 @@ int main()
     return EXIT_SUCCESS;
 }
 
+//Precondition: None
+//Postcondition: Returns 0
 int menuOption()
 {
     system("cls");
