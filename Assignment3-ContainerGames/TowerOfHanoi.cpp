@@ -41,7 +41,6 @@ int TowerOfHanoi::getHoldNum() const
 	return holdNum;
 }
 
-
 //Precondition: A Stack 
 //Postcondition: returns the stack character object
 stack<int> TowerOfHanoi::getStack(char stackLetter) const
@@ -206,6 +205,7 @@ void TowerOfHanoi::hanoiTowerPop(char towerOption)
 	}
 }
 
+//Checks where the peg is moved in the tower is occupied, and if there is a conflict with a bigger number
 //Precondition: A Character
 //Postcondition: Returns none
 void TowerOfHanoi::hanoiTowerPush(char towerOption)
@@ -272,8 +272,9 @@ void TowerOfHanoi::hanoiTowerPush(char towerOption)
 	moveCount++;
 }
 
+//Verifies if all disks has been properly moved to the third stack, confirming a win
 //Precondition: None
-//Postcondition: Returns true or false depending on if each disk has been properly moved to the third stack
+//Postcondition: Returns true or false
 bool TowerOfHanoi::hasWon() const
 {
 
