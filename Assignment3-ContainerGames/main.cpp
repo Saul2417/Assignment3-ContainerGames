@@ -4,8 +4,7 @@
 #include <string>
 #include <vector>
 #include <cmath>
-
-#include "TowerOfHanoi.h"
+#include "GameTimer.h"
 
 
 using namespace std;

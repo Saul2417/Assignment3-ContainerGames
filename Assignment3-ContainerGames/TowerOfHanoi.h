@@ -1,17 +1,14 @@
 #pragma once
 #include <stack>
-#include <chrono>
+#include "GameTimer.h"
 using namespace std;
 
-class TowerOfHanoi
+class TowerOfHanoi: public GameTimer
 {
 private:
 	int numDisks;
 	int moveCount;
 	int holdNum;
-	int roundTimeToSolve;
-	int fastestRoundTime;
-	int slowestRoundTime;
 	char pegToPop;
 	stack <int> stackA;
 	stack <int> stackB;
@@ -23,19 +20,22 @@ public:
 	int getMoveCount() const;
 	int getHoldNum() const;
 	stack<int> getStack(char stackLetter) const;
-	int getRoundTimeToSolve() const;
-	int getFastestRoundTime() const;
 	char getPegToPop() const;
 	void setNumDisks(int newNumDisks);
 	void setMoveCount(int newMoveCount);
 	void setHoldNum(int newHoldNum);
-	void setRoundTimeToSolve(int newSolveTime);
 	void initializeRound();
 	void displayTowers() const;
 	void hanoiTowerPop(char towerOption);
 	void hanoiTowerPush(char towerOption);
 	bool hasWon() const;
-};
 
-//class GameTimer :: TowerOfHanoi
+	friend bool operator <(const TowerOfHanoi& obj1, const TowerOfHanoi& obj2)
+	{
+		if (obj1.numDisks < obj2.numDisks)
+			return true;
+		else
+			return false;
+	}
+};
 

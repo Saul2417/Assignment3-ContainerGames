@@ -1,6 +1,7 @@
 #include "TowerOfHanoi.h"
 #include "input.h"
 #include <cmath>
+#include <vector>
 #include <iomanip>
 
 //Precondition:
@@ -10,9 +11,6 @@ TowerOfHanoi::TowerOfHanoi()
 	numDisks = 0;
 	moveCount = 0;
 	holdNum = 0;
-	roundTimeToSolve = -1;
-	fastestRoundTime = -1;
-	slowestRoundTime = -1;
 	pegToPop = ' ';
 }
 
@@ -37,19 +35,6 @@ int TowerOfHanoi::getHoldNum() const
 	return holdNum;
 }
 
-//Precondition:
-//Postcondition: return the value of the roundTimeToSolve object
-int TowerOfHanoi::getRoundTimeToSolve() const
-{
-	return roundTimeToSolve;
-}
-
-//Precondition:
-//Postcondition: return the value of the fastestRoundTime object
-int TowerOfHanoi::getFastestRoundTime() const
-{
-	return fastestRoundTime;
-}
 
 //Precondition:
 //Postcondition: return one of the stack objects
@@ -89,21 +74,6 @@ void TowerOfHanoi::setMoveCount(int newMoveCount)
 void TowerOfHanoi::setHoldNum(int newHoldNum)
 {
 	holdNum = newHoldNum;
-}
-
-//Precondition:
-//Postcondition:
-void TowerOfHanoi::setRoundTimeToSolve(int newSolveTime)
-{
-	roundTimeToSolve = newSolveTime;
-	if (fastestRoundTime == -1 || roundTimeToSolve < fastestRoundTime)
-	{
-		fastestRoundTime = roundTimeToSolve;
-	}
-	if (slowestRoundTime == -1 || roundTimeToSolve > slowestRoundTime)
-	{
-		slowestRoundTime = roundTimeToSolve;
-	}
 }
 
 //Precondition:
@@ -319,24 +289,26 @@ bool TowerOfHanoi::hasWon() const
 	return true;
 }
 
+
 void displayHanoiRules();
-void towerOfHanoiRound(TowerOfHanoi hanoiGame);
-char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiGame);
+void towerOfHanoiRound(TowerOfHanoi& hanoiRound);
+char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiRound);
 char towerOfHanoiRoundPushOption();
-void displayFinalStatistics(TowerOfHanoi hanoiGame);
+void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame);
 void displayHanoiRules();
 
 //Precondition: None
 //Postcondition: None
 void playTowerOfHanoi()
 {
-	TowerOfHanoi hanoiGame;
+	vector<TowerOfHanoi> hanoiGame;
 	displayHanoiRules();
-
 	do
 	{
-		hanoiGame.initializeRound();
-		towerOfHanoiRound(hanoiGame);
+		TowerOfHanoi hanoiRound;	
+		hanoiRound.initializeRound();
+		towerOfHanoiRound(hanoiRound);
+		hanoiGame.push_back(hanoiRound);
 		
 		if (toupper(inputChar("Play again? (Y-yes or N-no) ", "YN")) == 'N')
 		{
@@ -348,36 +320,35 @@ void playTowerOfHanoi()
 
 //Precondition:
 //Postcondition: None
-void towerOfHanoiRound(TowerOfHanoi hanoiGame)
+void towerOfHanoiRound(TowerOfHanoi& hanoiRound)
 {
-	chrono::steady_clock::time_point start = chrono::high_resolution_clock::now();
+	hanoiRound.setStartTime();
 	do
 	{
-		hanoiGame.displayTowers();
-		switch (towerOfHanoiRoundPopOption(hanoiGame))
+		hanoiRound.displayTowers();
+		switch (towerOfHanoiRoundPopOption(hanoiRound))
 		{
 		case 'Q': return; break;
-		case 'A': hanoiGame.hanoiTowerPop('A'); break;		
-		case 'B': hanoiGame.hanoiTowerPop('B'); break;
-		case 'C': hanoiGame.hanoiTowerPop('C'); break;
+		case 'A': hanoiRound.hanoiTowerPop('A'); break;		
+		case 'B': hanoiRound.hanoiTowerPop('B'); break;
+		case 'C': hanoiRound.hanoiTowerPop('C'); break;
 		default: std::cout << "\t\tERROR - Invalid option. Please re-enter."; break;
 		}
 
 		switch (towerOfHanoiRoundPushOption())
 		{
 		case 'Q': return; break;
-		case 'A': hanoiGame.hanoiTowerPush('A'); break;
-		case 'B': hanoiGame.hanoiTowerPush('B'); break;
-		case 'C': hanoiGame.hanoiTowerPush('C'); break;
+		case 'A': hanoiRound.hanoiTowerPush('A'); break;
+		case 'B': hanoiRound.hanoiTowerPush('B'); break;
+		case 'C': hanoiRound.hanoiTowerPush('C'); break;
 		default: std::cout << "\t\tERROR - Invalid option. Please re-enter."; break;
 		}
 
-		if (hanoiGame.hasWon())
+		if (hanoiRound.hasWon())
 		{
 			chrono::steady_clock::time_point end = chrono::high_resolution_clock::now();
-			hanoiGame.setRoundTimeToSolve(chrono::duration_cast<chrono::seconds>((end - start)).count());
-			cout << "Congrats! You Solved The Game In " << hanoiGame.getMoveCount() << " Turn(s)." << endl
-			     << "Time Taken: " << hanoiGame.getRoundTimeToSolve() << " Seconds. " << endl << endl;
+			hanoiRound.setEndTime();
+			std::cout << "Congrats! You Solved The Game In " << hanoiRound.getMoveCount() << " Turn(s)." << endl;
 			return;
 		};
 		system("pause");
@@ -386,7 +357,7 @@ void towerOfHanoiRound(TowerOfHanoi hanoiGame)
 
 //Precondition:
 //Postcondition: Return a char character to represent user choice that has has been verified to match a stack that is not empty
-char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiGame)
+char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiRound)
 {
 	char option;
 	do
@@ -396,11 +367,11 @@ char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiGame)
 		{
 			break;
 		}
-		if (hanoiGame.getStack(option).empty())
+		if (hanoiRound.getStack(option).empty())
 		{
-			cout << "Error: Peg-" << option << " is empty, cannot pop. Please enter a peg that is not empty." << endl;
+			std::cout << "Error: Peg-" << option << " is empty, cannot pop. Please enter a peg that is not empty." << endl;
 		}
-	}while (hanoiGame.getStack(option).empty());
+	}while (hanoiRound.getStack(option).empty());
 
 	return option;
 }
@@ -413,9 +384,61 @@ char towerOfHanoiRoundPushOption()
 	return option;
 }
 
-void displayFinalStatistics(TowerOfHanoi hanoiGame)
+void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 {
-	
+	/*int fastestTime = -1;
+	int fastTimeIndex = -1;
+	int slowestTime = -1;
+	int slowTimeIndex = -1;
+	int averageTime = -1;
+	int timeToSolve = -1;
+	int totalTime = -1;
+	int numDiskIndex = -1;
+	int numDisks = 0;
+
+	if (hanoiGame[0].getRoundTimeToSolve() == -1)
+	{
+		std::cout << "No Game Statistics Exist.";
+		return;
+	}
+	std::sort(hanoiGame.begin(), hanoiGame.end());
+	std::cout << "Game Statistics: " << endl;
+	numDisks = hanoiGame[0].getNumDisks();
+	 
+	for (int index = 0; index < hanoiGame.size(); index++)
+	{
+		for (int i = index; i < hanoiGame.size(); i++)
+		{		
+			if (numDiskIndex != hanoiGame[i].getNumDisks())
+			{
+				break;
+			}
+
+			timeToSolve = hanoiGame[index].getRoundTimeToSolve();
+			totalTime += timeToSolve;
+
+			if (fastestTime == -1 || timeToSolve < fastestTime)
+			{
+				fastestTime = timeToSolve;
+				fastTimeIndex = i;
+			}
+			if (slowestTime == -1 || timeToSolve > slowestTime)
+			{
+				slowestTime = timeToSolve;
+				slowTimeIndex = i;
+			}
+		}
+		averageTime = totalTime / (numDiskIndex - index);
+		std::cout << numDisks << " using " << hanoiGame[fastTimeIndex].getNumDisks() << " disk(s) was played:" << endl;
+		std::cout << setw(10) << " The Fastest Time Was " << fastestTime << " in " << hanoiGame[fastTimeIndex].getMoveCount() << endl;
+		std::cout << setw(10) << " The Slowest Time Was " << slowestTime << " in " << hanoiGame[slowTimeIndex].getMoveCount() << endl;
+		std::cout << setw(10) << " The Average Time Was " << averageTime;
+
+		averageTime = 0;
+		fastestTime = 0;
+		slowestTime = 0;
+		index = numDiskIndex;
+	}*/
 }
 
 //Precondition: None
