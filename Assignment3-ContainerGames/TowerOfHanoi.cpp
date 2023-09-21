@@ -348,10 +348,10 @@ void towerOfHanoiRound(TowerOfHanoi& hanoiRound)
 		{
 			chrono::steady_clock::time_point end = chrono::high_resolution_clock::now();
 			hanoiRound.setEndTime();
+			hanoiRound.displayTowers();
 			std::cout << "Congrats! You Solved The Game In " << hanoiRound.getMoveCount() << " Turn(s)." << endl;
 			return;
 		};
-		system("pause");
 	} while (true);
 }
 
@@ -386,14 +386,13 @@ char towerOfHanoiRoundPushOption()
 
 void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 {
-	/*int fastestTime = -1;
+	int fastestTime = -1;
 	int fastTimeIndex = -1;
 	int slowestTime = -1;
 	int slowTimeIndex = -1;
 	int averageTime = -1;
 	int timeToSolve = -1;
 	int totalTime = -1;
-	int numDiskIndex = -1;
 	int numDisks = 0;
 
 	if (hanoiGame[0].getRoundTimeToSolve() == -1)
@@ -405,39 +404,10 @@ void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 	std::cout << "Game Statistics: " << endl;
 	numDisks = hanoiGame[0].getNumDisks();
 	 
-	for (int index = 0; index < hanoiGame.size(); index++)
+	/*for (int index = 0; index < hanoiGame.size(); index++)
 	{
-		for (int i = index; i < hanoiGame.size(); i++)
-		{		
-			if (numDiskIndex != hanoiGame[i].getNumDisks())
-			{
-				break;
-			}
-
-			timeToSolve = hanoiGame[index].getRoundTimeToSolve();
-			totalTime += timeToSolve;
-
-			if (fastestTime == -1 || timeToSolve < fastestTime)
-			{
-				fastestTime = timeToSolve;
-				fastTimeIndex = i;
-			}
-			if (slowestTime == -1 || timeToSolve > slowestTime)
-			{
-				slowestTime = timeToSolve;
-				slowTimeIndex = i;
-			}
-		}
-		averageTime = totalTime / (numDiskIndex - index);
-		std::cout << numDisks << " using " << hanoiGame[fastTimeIndex].getNumDisks() << " disk(s) was played:" << endl;
-		std::cout << setw(10) << " The Fastest Time Was " << fastestTime << " in " << hanoiGame[fastTimeIndex].getMoveCount() << endl;
-		std::cout << setw(10) << " The Slowest Time Was " << slowestTime << " in " << hanoiGame[slowTimeIndex].getMoveCount() << endl;
-		std::cout << setw(10) << " The Average Time Was " << averageTime;
-
-		averageTime = 0;
-		fastestTime = 0;
-		slowestTime = 0;
-		index = numDiskIndex;
+		for (int numDiskIndex = index; )
+		
 	}*/
 }
 
