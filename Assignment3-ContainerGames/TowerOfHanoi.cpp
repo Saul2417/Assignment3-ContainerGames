@@ -4,6 +4,12 @@
 #include <vector>
 #include <iomanip>
 
+void towerOfHanoiRound(TowerOfHanoi& hanoiRound);
+char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiRound);
+char towerOfHanoiRoundPushOption();
+void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame);
+void displayHanoiRules();
+
 //Precondition: None
 //Postcondition: None
 TowerOfHanoi::TowerOfHanoi()
@@ -289,12 +295,7 @@ bool TowerOfHanoi::hasWon() const
 	return true;
 }
 
-void towerOfHanoiRound(TowerOfHanoi& hanoiRound);
-char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiRound);
-char towerOfHanoiRoundPushOption();
-void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame);
-void displayHanoiRules();
-
+//This is the start of the Game Logic
 //Precondition: None
 //Postcondition: None
 void playTowerOfHanoi()
@@ -316,6 +317,7 @@ void playTowerOfHanoi()
 	} while (true);	
 }
 
+//This shows the the options the player is give to pick in game
 //Precondition: A Vector class
 //Postcondition: Returns None
 void towerOfHanoiRound(TowerOfHanoi& hanoiRound)
@@ -353,6 +355,7 @@ void towerOfHanoiRound(TowerOfHanoi& hanoiRound)
 	} while (true);
 }
 
+//This is when the player picks a peg to move, or wants to quit in the middle of the game
 //Precondition: A Vector Class
 //Postcondition: Return a char character to represent user choice that has has been verified to match a stack that is not empty
 char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiRound)
@@ -374,6 +377,7 @@ char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiRound)
 	return option;
 }
 
+//This is where you want to move your slected peg.
 //Precondition: None
 //Postcondition: Returns a character
 char towerOfHanoiRoundPushOption()
@@ -382,6 +386,7 @@ char towerOfHanoiRoundPushOption()
 	return option;
 }
 
+//This calculates all the calculations during the games
 //Precondition: A Vector Class
 //Postcondition: Returns None
 void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
