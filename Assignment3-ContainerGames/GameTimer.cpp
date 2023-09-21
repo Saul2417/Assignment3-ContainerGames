@@ -8,14 +8,14 @@ GameTimer::GameTimer()
 }
 
 //Precondition: None
-//Postcondition: None
+//Postcondition: Returns an Integer
 int GameTimer::getRoundTimeToSolve() const
 {
 	return roundTimeToSolve;
 }
 
-//Precondition: None
-//Postcondition: None
+//Precondition: A Positive Integer
+//Postcondition: 
 void GameTimer::setRoundTimeToSolve(int newSolveTime)
 {
 	roundTimeToSolve = newSolveTime;
