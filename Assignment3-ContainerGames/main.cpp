@@ -6,7 +6,6 @@
 #include <cmath>
 #include "GameTimer.h"
 
-
 using namespace std;
 int menuOption();
 void playTowerOfHanoi();
@@ -14,29 +13,14 @@ void playTowerOfHanoi();
 int main()
 {
     playTowerOfHanoi();
-    /*
 
-    do
-    {
-        switch (menuOption())
-        {
-        case 0: exit(1); break;
-        case 1: //quadraticExpressionMenu(); break;
-        case 2: playTowerOfHanoi(); break;
-        case 3: //rationalNumMenu(); break;
-        default: cout << "\t\tERROR - Invalid option. Please re-enter."; break;
-        }
-        cout << "\n";
-        system("pause");
-    } while (true);
-*/
     return EXIT_SUCCESS;
 }
 
 int menuOption()
 {
     system("cls");
-    cout << "CMPR131 Chapter 3: Games using Containers by Saul Merino" << endl;
+    cout << "CMPR131 Chapter 3: Games using Containers by Saul Merino and John Kim" << endl;
     cout << string(100, char(205)) << endl;
 
     cout << "1. Tic-Tac-Toe" << endl;
