@@ -18,13 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TicTacToe.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TowerOfHanoi.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NQueens.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameTimer.cpp">
@@ -32,13 +26,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TicTacToe.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TowerOfHanoi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NQueens.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="input.h">

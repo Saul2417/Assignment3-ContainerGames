@@ -393,6 +393,7 @@ void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 	int timeToSolve = -1;
 	int numDisksTime = -1;
 	int numDisks = 0;
+	int matchingDiskGames = 0;
 
 	if (hanoiGame[0].getRoundTimeToSolve() == -1)
 	{
@@ -407,18 +408,21 @@ void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 	{
 		for (int numDiskIndex = index; numDiskIndex < hanoiGame.size(); numDiskIndex++)
 		{
-			if (numDisks != hanoiGame[numDiskIndex].getNumDisks())
+			matchingDiskGames++;
+			if (numDisks != hanoiGame[numDiskIndex].getNumDisks() || numDiskIndex == hanoiGame.size() - 1)
 			{
-				averageTime = numDisksTime / (numDiskIndex - index);
+				averageTime = numDisksTime / matchingDiskGames;
 
-				std::cout << numDiskIndex - index << "Games was played." << endl;
-				cout << setw(5) << " The Fastest Time Was: " << fastestTime << " in " << hanoiGame[fastTimeIndex].getMoveCount() << " moves." << endl;
-				cout << setw(5) << " The Slowest Time Was: " << slowestTime << " in " << hanoiGame[slowTimeIndex].getMoveCount() << " moves." << endl;
-				cout << setw(5) << " The Average Time Was: " << averageTime << endl;
+				std::cout << numDiskIndex - index << " Game(s) using " << numDisks << " disks was played." << endl;
+				cout << setw(5) << "    The Fastest Time Was: " << fastestTime << " in " << hanoiGame[fastTimeIndex].getMoveCount() << " moves." << endl;
+				cout << setw(5) << "    The Slowest Time Was: " << slowestTime << " in " << hanoiGame[slowTimeIndex].getMoveCount() << " moves." << endl;
+				cout << setw(5) << "    The Average Time Was: " << averageTime << " Second" << endl;
 				fastestTime = -1;
 				slowestTime = -1;
 				averageTime = -1;
+				matchingDiskGames = 0;
 				index = numDiskIndex;
+				numDisks = hanoiGame[numDiskIndex].getNumDisks();
 				break;
 			}
 
@@ -435,6 +439,7 @@ void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 				slowestTime = indexTime;
 				slowTimeIndex = numDiskIndex;
 			}
+			
 		}		
 	}
 }
