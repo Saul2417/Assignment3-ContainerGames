@@ -129,11 +129,15 @@
   <ItemGroup>
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="N_Queens.cpp" />
+    <ClCompile Include="TicTacToe.cpp" />
     <ClCompile Include="TowerOfHanoi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="N_Queens.h" />
+    <ClInclude Include="TicTacToe.h" />
     <ClInclude Include="TowerOfHanoi.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

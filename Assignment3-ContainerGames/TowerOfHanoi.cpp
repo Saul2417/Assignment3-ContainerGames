@@ -4,8 +4,14 @@
 #include <vector>
 #include <iomanip>
 
-//Precondition:
-//Postcondition:
+void towerOfHanoiRound(TowerOfHanoi& hanoiRound);
+char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiRound);
+char towerOfHanoiRoundPushOption();
+void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame);
+void displayHanoiRules();
+
+//Precondition: None
+//Postcondition: None
 TowerOfHanoi::TowerOfHanoi()
 {
 	numDisks = 0;
@@ -14,21 +20,21 @@ TowerOfHanoi::TowerOfHanoi()
 	pegToPop = ' ';
 }
 
-//Precondition:
-//Postcondition: return the value of the numDisks object
+//Precondition: An Integer within the range of 1 to 64
+//Postcondition: Return an integer of the numDisks object
 int TowerOfHanoi::getNumDisks() const
 {
 	return numDisks;
 }
 
 //Precondition:
-//Postcondition: return the value of the moveCount object
+//Postcondition: return the integer value of the moveCount object
 int TowerOfHanoi::getMoveCount() const
 {
 	return moveCount;
 }
 
-//Precondition:
+//Precondition: A Positive Integer
 //Postcondition: return the value of the holdNum object
 int TowerOfHanoi::getHoldNum() const
 {
@@ -36,8 +42,8 @@ int TowerOfHanoi::getHoldNum() const
 }
 
 
-//Precondition:
-//Postcondition: return one of the stack objects
+//Precondition: A Stack 
+//Postcondition: returns the stack character object
 stack<int> TowerOfHanoi::getStack(char stackLetter) const
 {
 	switch (stackLetter)
@@ -48,36 +54,36 @@ stack<int> TowerOfHanoi::getStack(char stackLetter) const
 	}
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: None
+//Postcondition: Returns a Character
 char TowerOfHanoi::getPegToPop() const
 {
 	return pegToPop;
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: A Positive Integer
+//Postcondition: None
 void TowerOfHanoi::setNumDisks(int newNumDisks)
 {
 	numDisks = newNumDisks;
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: An Integer
+//Postcondition: None
 void TowerOfHanoi::setMoveCount(int newMoveCount)
 {
 	moveCount = newMoveCount;
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: Integer
+//Postcondition: None
 void TowerOfHanoi::setHoldNum(int newHoldNum)
 {
 	holdNum = newHoldNum;
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: None
+//Postcondition: None
 void TowerOfHanoi::initializeRound()
 {
 	while (!stackA.empty())
@@ -99,11 +105,11 @@ void TowerOfHanoi::initializeRound()
 	for (int index = 0; index < numDisks; index++)
 	{
 		stackA.push(numDisks - index);
-	}	
+	}
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: None
+//Postcondition: Returns none
 void TowerOfHanoi::displayTowers() const
 {
 	// use temporary stacks to display the stacks to the user
@@ -148,8 +154,8 @@ void TowerOfHanoi::displayTowers() const
 		std::cout << endl;
 	}
 	std::cout << setw(5) << ' ' << char(205) << char(205) << char(205) << char(205) << char(205)
-			  << setw(5) << ' ' << char(205) << char(205) << char(205) << char(205) << char(205)
-			  << setw(5) << ' ' << char(205) << char(205) << char(205) << char(205) << char(205)  << endl;
+		<< setw(5) << ' ' << char(205) << char(205) << char(205) << char(205) << char(205)
+		<< setw(5) << ' ' << char(205) << char(205) << char(205) << char(205) << char(205) << endl;
 	std::cout << setw(7) << ' ' << setw(10) << 'A' << setw(10) << 'B' << setw(10) << 'C' << endl << endl;
 
 	// Display Move Number
@@ -157,13 +163,13 @@ void TowerOfHanoi::displayTowers() const
 
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: A character
+//Postcondition: Returns None
 void TowerOfHanoi::hanoiTowerPop(char towerOption)
 {
 	switch (towerOption)
 	{
-	case 'A': 
+	case 'A':
 		if (!stackA.empty())
 		{
 			holdNum = stackA.top();
@@ -174,7 +180,7 @@ void TowerOfHanoi::hanoiTowerPop(char towerOption)
 		{
 			std::cout << "Peg is empty, cannot pop. Please try again.";
 		}
-	case 'B': 
+	case 'B':
 		if (!stackB.empty())
 		{
 			holdNum = stackB.top();
@@ -185,11 +191,11 @@ void TowerOfHanoi::hanoiTowerPop(char towerOption)
 		{
 			std::cout << "Peg is empty, cannot pop. Please try again.";
 		}
-	case 'C': 
+	case 'C':
 		if (!stackC.empty())
 		{
-			holdNum = stackC.top(); 
-			pegToPop = 'C';  
+			holdNum = stackC.top();
+			pegToPop = 'C';
 			break;
 		}
 		else
@@ -200,8 +206,8 @@ void TowerOfHanoi::hanoiTowerPop(char towerOption)
 	}
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: A Character
+//Postcondition: Returns none
 void TowerOfHanoi::hanoiTowerPush(char towerOption)
 {
 	if (towerOption == pegToPop)
@@ -213,9 +219,9 @@ void TowerOfHanoi::hanoiTowerPush(char towerOption)
 
 	switch (towerOption)
 	{
-	case 'A': 
+	case 'A':
 		if (stackA.empty() || holdNum < stackA.top())
-		{ 
+		{
 			stackA.push(holdNum);
 		}
 		else
@@ -224,8 +230,8 @@ void TowerOfHanoi::hanoiTowerPush(char towerOption)
 			return;
 		}
 		break;
-	
-	case 'B': 
+
+	case 'B':
 		if (stackB.empty() || holdNum < stackB.top())
 		{
 			stackB.push(holdNum);
@@ -236,7 +242,7 @@ void TowerOfHanoi::hanoiTowerPush(char towerOption)
 			return;
 		}
 		break;
-	case 'C': 
+	case 'C':
 		if (stackC.empty() || holdNum < stackC.top())
 		{
 			stackC.push(holdNum);
@@ -261,7 +267,7 @@ void TowerOfHanoi::hanoiTowerPush(char towerOption)
 	{
 		stackC.pop();
 	}
-	
+
 	std::cout << "Top Peg From Peg-" << pegToPop << " Has Moved to Peg-" << towerOption << endl;
 	moveCount++;
 }
@@ -270,7 +276,7 @@ void TowerOfHanoi::hanoiTowerPush(char towerOption)
 //Postcondition: Returns true or false depending on if each disk has been properly moved to the third stack
 bool TowerOfHanoi::hasWon() const
 {
-	
+
 	if (stackC.size() != numDisks)
 	{
 		return false;
@@ -280,7 +286,7 @@ bool TowerOfHanoi::hasWon() const
 
 	for (int index = 0; index < numDisks; index++)
 	{
-		if (verifyStackC.top() != (index + 1)) 
+		if (verifyStackC.top() != (index + 1))
 		{
 			return false;
 		}
@@ -289,12 +295,7 @@ bool TowerOfHanoi::hasWon() const
 	return true;
 }
 
-void towerOfHanoiRound(TowerOfHanoi& hanoiRound);
-char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiRound);
-char towerOfHanoiRoundPushOption();
-void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame);
-void displayHanoiRules();
-
+//This is the start of the Game Logic
 //Precondition: None
 //Postcondition: None
 void playTowerOfHanoi()
@@ -303,21 +304,22 @@ void playTowerOfHanoi()
 	displayHanoiRules();
 	do
 	{
-		TowerOfHanoi hanoiRound;	
+		TowerOfHanoi hanoiRound;
 		hanoiRound.initializeRound();
 		towerOfHanoiRound(hanoiRound);
 		hanoiGame.push_back(hanoiRound);
-		
+
 		if (toupper(inputChar("Play again? (Y-yes or N-no) ", "YN")) == 'N')
 		{
 			displayFinalStatistics(hanoiGame);
 			return;
 		}
-	} while (true);	
+	} while (true);
 }
 
-//Precondition:
-//Postcondition: None
+//This shows the the options the player is give to pick in game
+//Precondition: A Vector class
+//Postcondition: Returns None
 void towerOfHanoiRound(TowerOfHanoi& hanoiRound)
 {
 	hanoiRound.setStartTime();
@@ -327,7 +329,7 @@ void towerOfHanoiRound(TowerOfHanoi& hanoiRound)
 		switch (towerOfHanoiRoundPopOption(hanoiRound))
 		{
 		case 'Q': return; break;
-		case 'A': hanoiRound.hanoiTowerPop('A'); break;		
+		case 'A': hanoiRound.hanoiTowerPop('A'); break;
 		case 'B': hanoiRound.hanoiTowerPop('B'); break;
 		case 'C': hanoiRound.hanoiTowerPop('C'); break;
 		default: std::cout << "\t\tERROR - Invalid option. Please re-enter."; break;
@@ -353,7 +355,8 @@ void towerOfHanoiRound(TowerOfHanoi& hanoiRound)
 	} while (true);
 }
 
-//Precondition:
+//This is when the player picks a peg to move, or wants to quit in the middle of the game
+//Precondition: A Vector Class
 //Postcondition: Return a char character to represent user choice that has has been verified to match a stack that is not empty
 char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiRound)
 {
@@ -369,19 +372,23 @@ char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiRound)
 		{
 			std::cout << "Error: Peg-" << option << " is empty, cannot pop. Please enter a peg that is not empty." << endl;
 		}
-	}while (hanoiRound.getStack(option).empty());
+	} while (hanoiRound.getStack(option).empty());
 
 	return option;
 }
 
+//This is where you want to move your slected peg.
 //Precondition: None
-//Postcondition: None
+//Postcondition: Returns a character
 char towerOfHanoiRoundPushOption()
 {
 	char option = (toupper(inputChar("Select the end peg (A, B, C or Q-quit) to move the selected disk: ", "ABCQ")));
 	return option;
 }
 
+//This calculates all the calculations during the games
+//Precondition: A Vector Class
+//Postcondition: Returns None
 void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 {
 	std::sort(hanoiGame.begin(), hanoiGame.end());
@@ -401,10 +408,10 @@ void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 		std::cout << "No Game Statistics Exist.";
 		return;
 	}
-	
+
 	std::cout << "Game Statistics: " << endl;
 	for (int index = 0; index < hanoiGame.size(); index++)
-	{		
+	{
 
 		matchingDiskGames++;
 		int indexTime = hanoiGame[index].getRoundTimeToSolve();
@@ -419,7 +426,7 @@ void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 			slowestTime = indexTime;
 			slowTimeIndex = index;
 		}
-		
+
 		if (index == hanoiGame.size() - 1 || numDisks != hanoiGame[index + 1].getNumDisks())
 		{
 			if (matchingDiskGames == 0) matchingDiskGames++;
@@ -431,7 +438,7 @@ void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 			cout << setw(5) << "    The Slowest Time Was: " << slowestTime << " Second(s) in " << hanoiGame[slowTimeIndex].getMoveCount() << " moves." << endl;
 			cout << setw(5) << "    The Average Time Was: " << averageTime << " Second(s)" << endl;
 			if (index != hanoiGame.size() - 1)
-			{		
+			{
 				fastestTime = -1;
 				slowestTime = -1;
 				averageTime = -1;
@@ -439,7 +446,7 @@ void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 				matchingDiskGames = 0;
 				numDisks = hanoiGame[index + 1].getNumDisks();
 			}
-		}			
+		}
 	}
 }
 
