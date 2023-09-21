@@ -317,7 +317,7 @@ void playTowerOfHanoi()
 }
 
 //Precondition: A Vector class
-//Postcondition: None
+//Postcondition: Returns None
 void towerOfHanoiRound(TowerOfHanoi& hanoiRound)
 {
 	hanoiRound.setStartTime();
@@ -382,6 +382,8 @@ char towerOfHanoiRoundPushOption()
 	return option;
 }
 
+//Precondition: A Vector Class
+//Postcondition: Returns None
 void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 {
 	std::sort(hanoiGame.begin(), hanoiGame.end());
