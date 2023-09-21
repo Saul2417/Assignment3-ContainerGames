@@ -289,7 +289,6 @@ bool TowerOfHanoi::hasWon() const
 	return true;
 }
 
-void displayHanoiRules();
 void towerOfHanoiRound(TowerOfHanoi& hanoiRound);
 char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiRound);
 char towerOfHanoiRoundPushOption();
@@ -385,14 +384,14 @@ char towerOfHanoiRoundPushOption()
 
 void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 {
-	int fastestTime = -1;
+	int fastestTime = hanoiGame[0].getRoundTimeToSolve();;
 	int fastTimeIndex = -1;
-	int slowestTime = -1;
+	int slowestTime = hanoiGame[0].getRoundTimeToSolve();;
 	int slowTimeIndex = -1;
 	int averageTime = -1;
 	int timeToSolve = -1;
-	int numDisksTime = -1;
-	int numDisks = 0;
+	int numDisksTime = hanoiGame[0].getRoundTimeToSolve();;
+	int numDisks = hanoiGame[0].getNumDisks();
 	int matchingDiskGames = 0;
 
 	if (hanoiGame[0].getRoundTimeToSolve() == -1)
@@ -402,50 +401,47 @@ void displayFinalStatistics(vector<TowerOfHanoi> hanoiGame)
 	}
 	std::sort(hanoiGame.begin(), hanoiGame.end());
 	std::cout << "Game Statistics: " << endl;
-	numDisks = hanoiGame[0].getNumDisks();
-	 
 	for (int index = 0; index < hanoiGame.size(); index++)
-	{
-		fastestTime = hanoiGame[index].getRoundTimeToSolve();
-		slowestTime = hanoiGame[index].getRoundTimeToSolve();
-		numDisksTime = hanoiGame[index].getRoundTimeToSolve();
+	{		
 		fastTimeIndex = index;
 		slowTimeIndex = index;
-
+		
 		for (int numDiskIndex = index; numDiskIndex < hanoiGame.size(); numDiskIndex++)
-		{
-			matchingDiskGames++;
-			
-			if (numDiskIndex == hanoiGame.size() - 1 || numDisks != hanoiGame[numDiskIndex + 1].getNumDisks())
+		{	
+			if (numDisks == hanoiGame[numDiskIndex].getNumDisks())
 			{
-				averageTime = numDisksTime / matchingDiskGames;
+				matchingDiskGames++;
+				int indexTime = hanoiGame[numDiskIndex].getRoundTimeToSolve();
+				numDisksTime += indexTime;
+				if (indexTime < fastestTime)
+				{
+					fastestTime = indexTime;
+					fastTimeIndex = numDiskIndex;
+				}
+				if (indexTime > fastestTime)
+				{
+					slowestTime = indexTime;
+					slowTimeIndex = numDiskIndex;
+				}
+			}			
+			if (numDiskIndex == hanoiGame.size() - 1 || numDisks != hanoiGame[numDiskIndex].getNumDisks())
+			{
+				if (matchingDiskGames == 0) matchingDiskGames++;
+					averageTime = numDisksTime / matchingDiskGames;
 
-				std::cout << numDiskIndex - index + 1 << " Game(s) using " << numDisks << " disks was played." << endl;
-				cout << setw(5) << "    The Fastest Time Was: " << fastestTime << " in " << hanoiGame[fastTimeIndex].getMoveCount() << " moves." << endl;
-				cout << setw(5) << "    The Slowest Time Was: " << slowestTime << " in " << hanoiGame[slowTimeIndex].getMoveCount() << " moves." << endl;
-				cout << setw(5) << "    The Average Time Was: " << averageTime << " Second" << endl;
-				fastestTime = -1;
-				slowestTime = -1;
-				averageTime = -1;
-				matchingDiskGames = 0;
+				std::cout << matchingDiskGames << " Game(s) using " << numDisks << " disks was played." << endl;
+				cout << setw(5) << "    The Fastest Time Was: " << fastestTime << " Second(s) in " << hanoiGame[fastTimeIndex].getMoveCount() << " moves." << endl;
+				cout << setw(5) << "    The Slowest Time Was: " << slowestTime << " Second(s) in " << hanoiGame[slowTimeIndex].getMoveCount() << " moves." << endl;
+				cout << setw(5) << "    The Average Time Was: " << averageTime << " Second(s)" << endl;
+				fastestTime = hanoiGame[numDiskIndex].getRoundTimeToSolve();
+				slowestTime = hanoiGame[numDiskIndex].getRoundTimeToSolve();
+				averageTime = hanoiGame[numDiskIndex].getRoundTimeToSolve();				
+				numDisksTime = hanoiGame[numDiskIndex].getRoundTimeToSolve();
+				matchingDiskGames = 1;
 				index = numDiskIndex;
 				numDisks = hanoiGame[numDiskIndex].getNumDisks();
 				break;
-			}
-
-			int indexTime = hanoiGame[numDiskIndex].getRoundTimeToSolve();
-			numDisksTime += indexTime;
-
-			if (indexTime < fastestTime)
-			{
-				fastestTime = indexTime;
-				fastTimeIndex = numDiskIndex;
-			}
-			if (indexTime > fastestTime)
-			{
-				slowestTime = indexTime;
-				slowTimeIndex = numDiskIndex;
-			}		
+			}				
 		}		
 	}
 }
