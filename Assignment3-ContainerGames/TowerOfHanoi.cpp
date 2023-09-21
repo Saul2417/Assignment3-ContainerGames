@@ -4,8 +4,8 @@
 #include <vector>
 #include <iomanip>
 
-//Precondition:
-//Postcondition:
+//Precondition: None
+//Postcondition: None
 TowerOfHanoi::TowerOfHanoi()
 {
 	numDisks = 0;
@@ -14,21 +14,21 @@ TowerOfHanoi::TowerOfHanoi()
 	pegToPop = ' ';
 }
 
-//Precondition:
-//Postcondition: return the value of the numDisks object
+//Precondition: An Integer within the range of 1 to 64
+//Postcondition: Return an integer of the numDisks object
 int TowerOfHanoi::getNumDisks() const
 {
 	return numDisks;
 }
 
 //Precondition:
-//Postcondition: return the value of the moveCount object
+//Postcondition: return the integer value of the moveCount object
 int TowerOfHanoi::getMoveCount() const
 {
 	return moveCount;
 }
 
-//Precondition:
+//Precondition: A Positive Integer
 //Postcondition: return the value of the holdNum object
 int TowerOfHanoi::getHoldNum() const
 {
@@ -36,8 +36,8 @@ int TowerOfHanoi::getHoldNum() const
 }
 
 
-//Precondition:
-//Postcondition: return one of the stack objects
+//Precondition: A Stack 
+//Postcondition: returns the stack character object
 stack<int> TowerOfHanoi::getStack(char stackLetter) const
 {
 	switch (stackLetter)
@@ -48,36 +48,36 @@ stack<int> TowerOfHanoi::getStack(char stackLetter) const
 	}
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: None
+//Postcondition: Returns a Character
 char TowerOfHanoi::getPegToPop() const
 {
 	return pegToPop;
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: A Positive Integer
+//Postcondition: None
 void TowerOfHanoi::setNumDisks(int newNumDisks)
 {
 	numDisks = newNumDisks;
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: An Integer
+//Postcondition: None
 void TowerOfHanoi::setMoveCount(int newMoveCount)
 {
 	moveCount = newMoveCount;
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: Integer
+//Postcondition: None
 void TowerOfHanoi::setHoldNum(int newHoldNum)
 {
 	holdNum = newHoldNum;
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: None
+//Postcondition: None
 void TowerOfHanoi::initializeRound()
 {
 	while (!stackA.empty())
@@ -102,8 +102,8 @@ void TowerOfHanoi::initializeRound()
 	}	
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: None
+//Postcondition: Returns none
 void TowerOfHanoi::displayTowers() const
 {
 	// use temporary stacks to display the stacks to the user
@@ -157,8 +157,8 @@ void TowerOfHanoi::displayTowers() const
 
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: A character
+//Postcondition: Returns None
 void TowerOfHanoi::hanoiTowerPop(char towerOption)
 {
 	switch (towerOption)
@@ -200,8 +200,8 @@ void TowerOfHanoi::hanoiTowerPop(char towerOption)
 	}
 }
 
-//Precondition:
-//Postcondition:
+//Precondition: A Character
+//Postcondition: Returns none
 void TowerOfHanoi::hanoiTowerPush(char towerOption)
 {
 	if (towerOption == pegToPop)
@@ -316,7 +316,7 @@ void playTowerOfHanoi()
 	} while (true);	
 }
 
-//Precondition:
+//Precondition: A Vector class
 //Postcondition: None
 void towerOfHanoiRound(TowerOfHanoi& hanoiRound)
 {
@@ -353,7 +353,7 @@ void towerOfHanoiRound(TowerOfHanoi& hanoiRound)
 	} while (true);
 }
 
-//Precondition:
+//Precondition: A Vector Class
 //Postcondition: Return a char character to represent user choice that has has been verified to match a stack that is not empty
 char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiRound)
 {
@@ -375,7 +375,7 @@ char towerOfHanoiRoundPopOption(TowerOfHanoi hanoiRound)
 }
 
 //Precondition: None
-//Postcondition: None
+//Postcondition: Returns a character
 char towerOfHanoiRoundPushOption()
 {
 	char option = (toupper(inputChar("Select the end peg (A, B, C or Q-quit) to move the selected disk: ", "ABCQ")));
